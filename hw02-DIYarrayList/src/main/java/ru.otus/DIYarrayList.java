@@ -3,12 +3,12 @@ package ru.otus;
 import java.util.*;
 
 public class DIYarrayList<T> implements List<T> {
-    private Object[] DIYarray;
+    private Object[] diyArray;
     private static final int DEFAULT_CAPACITY = 10;
     private int currentSize;
 
     public DIYarrayList() {
-        this.DIYarray = new Object[DEFAULT_CAPACITY];
+        this.diyArray = new Object[DEFAULT_CAPACITY];
     }
 
     @Override
@@ -17,9 +17,9 @@ public class DIYarrayList<T> implements List<T> {
     }
 
     private void grow() {
-        Object[] oldDIYarray = DIYarray;
-        DIYarray = new Object[(currentSize + (currentSize / 2))];
-        System.arraycopy(oldDIYarray, 0, DIYarray, 0, oldDIYarray.length);
+        Object[] oldDIYarray = diyArray;
+        diyArray = new Object[(currentSize + (currentSize / 2))];
+        System.arraycopy(oldDIYarray, 0, diyArray, 0, oldDIYarray.length);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class DIYarrayList<T> implements List<T> {
     @Override
     public Object[] toArray() {
         Object[] returnDIYarray = new Object[currentSize];
-        System.arraycopy(DIYarray, 0, returnDIYarray, 0, currentSize);
+        System.arraycopy(diyArray, 0, returnDIYarray, 0, currentSize);
         return returnDIYarray;
     }
 
@@ -51,8 +51,8 @@ public class DIYarrayList<T> implements List<T> {
 
     @Override
     public boolean add(T t) {
-        if (DIYarray.length == currentSize) grow();
-        DIYarray[currentSize++] = t;
+        if (diyArray.length == currentSize) grow();
+        diyArray[currentSize++] = t;
         return true;
     }
 
@@ -103,16 +103,16 @@ public class DIYarrayList<T> implements List<T> {
 
     @Override
     public void add(int index, T element) {
-        if (DIYarray.length == currentSize) grow();
-        System.arraycopy(DIYarray, index, DIYarray, index + 1, currentSize - index);
-        DIYarray[index] = element;
+        if (diyArray.length == currentSize) grow();
+        System.arraycopy(diyArray, index, diyArray, index + 1, currentSize - index);
+        diyArray[index] = element;
         currentSize++;
     }
 
     @Override
     public String toString() {
         List<String> stringList = new ArrayList<>();
-        for (Object current : DIYarray
+        for (Object current : diyArray
         ) {
             if (current != null) stringList.add(String.valueOf(current));
         }
@@ -166,7 +166,7 @@ public class DIYarrayList<T> implements List<T> {
         @Override
         public T next() {
             lastIteratorIndex = iteratorIndex;
-            return (T) DIYarray[iteratorIndex++];
+            return (T) diyArray[iteratorIndex++];
         }
 
         @Override
@@ -196,7 +196,7 @@ public class DIYarrayList<T> implements List<T> {
 
         @Override
         public void set(T t) {
-            DIYarray[lastIteratorIndex] = t;
+            diyArray[lastIteratorIndex] = t;
         }
 
         @Override
