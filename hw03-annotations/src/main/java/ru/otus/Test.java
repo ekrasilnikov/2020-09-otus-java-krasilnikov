@@ -9,13 +9,3 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @interface Test {
 }
-
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-@interface Before {
-}
-
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-@interface After {
-}
