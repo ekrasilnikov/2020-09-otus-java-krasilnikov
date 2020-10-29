@@ -6,32 +6,68 @@ import java.util.Collections;
 import java.util.List;
 
 public class TestRun {
-    private static Class<?> obtainedClass;
-    private static List<Method> beforeMethodsList;
-    private static List<Method> testMethodsList;
-    private static List<Method> afterMethodsList;
-    private static List<TestResultEnum> testResultList;
+
+    private Class<?> obtainedClass;
+    private List<Method> beforeMethodsList;
+    private List<Method> testMethodsList;
+    private List<Method> afterMethodsList;
+
+    public TestRun(String className) {
+        try {
+            setObtainedClass(Class.forName(className));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        setBeforeMethodsList(TestReflectMethods.getAnnotationsMethod(getObtainedClass(), Before.class));
+        setTestMethodsList(TestReflectMethods.getAnnotationsMethod(getObtainedClass(), Test.class));
+        setAfterMethodsList(TestReflectMethods.getAnnotationsMethod(getObtainedClass(), After.class));
+    }
+
+    public Class<?> getObtainedClass() {
+        return obtainedClass;
+    }
+
+    public void setObtainedClass(Class<?> obtainedClass) {
+        this.obtainedClass = obtainedClass;
+    }
+
+    public List<Method> getBeforeMethodsList() {
+        return beforeMethodsList;
+    }
+
+    public void setBeforeMethodsList(List<Method> beforeMethodsList) {
+        this.beforeMethodsList = beforeMethodsList;
+    }
+
+    public List<Method> getTestMethodsList() {
+        return testMethodsList;
+    }
+
+    public void setTestMethodsList(List<Method> testMethodsList) {
+        this.testMethodsList = testMethodsList;
+    }
+
+    public List<Method> getAfterMethodsList() {
+        return afterMethodsList;
+    }
+
+    public void setAfterMethodsList(List<Method> afterMethodsList) {
+        this.afterMethodsList = afterMethodsList;
+    }
 
     public static void main(String[] args) throws Exception {
-        preparationForLaunch("ru.otus.TestClass");
-        testLauncher();
+        TestRun testRun = new TestRun("ru.otus.TestClass");
+        testRun.testLauncher();
     }
 
-    private static void preparationForLaunch(String className) throws ClassNotFoundException {
-        obtainedClass = Class.forName(className);
-        beforeMethodsList = TestReflectMethods.getAnnotationsMethod(obtainedClass, Before.class);
-        testMethodsList = TestReflectMethods.getAnnotationsMethod(obtainedClass, Test.class);
-        afterMethodsList = TestReflectMethods.getAnnotationsMethod(obtainedClass, After.class);
-        testResultList = new ArrayList<>();
-    }
-
-    public static void testLauncher() throws Exception {
-        for (Method currentMethod : testMethodsList) {
-            Object testClassObject = createNewTestObject(obtainedClass);
+    public void testLauncher() throws Exception {
+        List<TestResultEnum> testResultList = new ArrayList<>();
+        for (Method currentMethod : getTestMethodsList()) {
+            Object testClassObject = createNewTestObject(getObtainedClass());
             try {
-                TestReflectMethods.runMethod(testClassObject, beforeMethodsList);
+                TestReflectMethods.runMethod(testClassObject, getBeforeMethodsList());
                 TestReflectMethods.runMethod(testClassObject, currentMethod);
-                TestReflectMethods.runMethod(testClassObject, afterMethodsList);
+                TestReflectMethods.runMethod(testClassObject, getAfterMethodsList());
                 testResultList.add(TestResultEnum.SUCCESSFUL);
             } catch (Exception e) {
                 testResultList.add(TestResultEnum.FAILED);
@@ -40,17 +76,17 @@ public class TestRun {
         printTestResult(testResultList);
     }
 
-    private static Object createNewTestObject(Class<?> inputClass) throws Exception {
+    private Object createNewTestObject(Class<?> inputClass) throws Exception {
         return inputClass.getDeclaredConstructor().newInstance();
     }
 
-    private static void printTestResult(List<TestResultEnum> result) {
+    private void printTestResult(List<TestResultEnum> result) {
         System.out.println("Test count: " + result.size());
         System.out.println("Test successful: " + getTestCount(result, TestResultEnum.SUCCESSFUL));
         System.out.println("Test failed: " + getTestCount(result, TestResultEnum.FAILED));
     }
 
-    private static int getTestCount(List<TestResultEnum> testResult, TestResultEnum searchEnum) {
+    private int getTestCount(List<TestResultEnum> testResult, TestResultEnum searchEnum) {
         return Collections.frequency(testResult, searchEnum);
     }
 }
