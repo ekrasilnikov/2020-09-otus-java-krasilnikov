@@ -16,6 +16,11 @@ public class MyClassImpl implements MyClassInterface {
         printOperationResult(operation, result);
     }
 
+    @Override
+    public void calculationWOLog(int param1, int param2) {
+        calculation(param1, param2);
+    }
+
     @Log
     @Override
     public void calculation(int param1, int param2, MyClassEnum operation) {
