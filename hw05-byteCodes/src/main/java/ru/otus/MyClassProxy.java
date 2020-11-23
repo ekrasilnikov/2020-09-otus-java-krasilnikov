@@ -5,14 +5,13 @@ import org.apache.commons.lang3.StringUtils;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 class MyClassProxy {
 
-    private MyClassProxy() {
-    }
-
-    static MyClassInterface createMyClass() {
+    static MyClassInterface createMyClass() throws NoSuchMethodException {
         InvocationHandler handler = new DemoInvocationHandler(new MyClassImpl());
         return (MyClassInterface) Proxy.newProxyInstance(MyClassProxy.class.getClassLoader(),
                 new Class<?>[]{MyClassInterface.class}, handler);
@@ -20,23 +19,29 @@ class MyClassProxy {
 
     static class DemoInvocationHandler implements InvocationHandler {
         private final MyClassInterface myClass;
+        List<Method> annotatedMethods = new ArrayList<>();
 
-        DemoInvocationHandler(MyClassInterface myClass) {
+        DemoInvocationHandler(MyClassInterface myClass) throws NoSuchMethodException {
             this.myClass = myClass;
+            for (Method method : myClass.getClass().getMethods()) {
+                if (myClass.getClass().getMethod(method.getName(), method.getParameterTypes()).isAnnotationPresent(Log.class)) {
+                    annotatedMethods.add(method);
+                }
+            }
         }
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            Method implMethod = myClass.getClass().getMethod(method.getName(), method.getParameterTypes());
-            Object invoke = method.invoke(myClass, args);
-            if (implMethod.isAnnotationPresent(Log.class)) {
-                printLog(proxy, method, args);
+            for (Method annotatedMethod : annotatedMethods) {
+                if (annotatedMethod.getName().equals(method.getName())) {
+                    printLog(myClass.getClass().getMethod(method.getName(), method.getParameterTypes()), args);
+                }
             }
-            return invoke;
+            return method.invoke(myClass, args);
         }
     }
 
-    static void printLog(Object proxy, Method method, Object[] args) {
+    static void printLog(Method method, Object[] args) {
         System.out.println("executed method:" + method.getName() + ", param: " + StringUtils.join(args, ", "));
     }
 }

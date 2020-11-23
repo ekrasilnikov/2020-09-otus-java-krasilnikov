@@ -2,13 +2,18 @@ package ru.otus;
 
 public class Demo {
 
-    public static void main(String[] args) {
-        System.out.println("*****Example of annotated methods*****");
+    public static void main(String[] args) throws NoSuchMethodException {
+
         MyClassInterface myClassInterface = MyClassProxy.createMyClass();
-        myClassInterface.calculation(90);
-        myClassInterface.calculation(183, 12);
-        myClassInterface.calculation(11, 3, MyClassEnum.DIVISION);
+
+        System.out.println("*****Example of annotated methods*****");
+        myClassInterface.calculationSum(183, 12);
+        System.out.println();
+
+        myClassInterface.calculationOperation(11, 3, MyClassEnum.DIVISION);
+        System.out.println();
+
         System.out.println("*****Example of methods without annotation*****");
-        myClassInterface.calculationWOLog(111, 121);
+        myClassInterface.calculationSumWOLog(111, 121);
     }
 }

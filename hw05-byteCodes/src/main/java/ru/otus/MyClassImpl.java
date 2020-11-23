@@ -1,29 +1,23 @@
 package ru.otus;
 
 public class MyClassImpl implements MyClassInterface {
-    @Log
-    @Override
-    public void calculation(int param1) {
-        MyClassEnum operation = MyClassEnum.ADDITION;
-        printOperationResult(operation, param1);
-    }
 
     @Log
     @Override
-    public void calculation(int param1, int param2) {
+    public void calculationSum(int param1, int param2) {
         MyClassEnum operation = MyClassEnum.ADDITION;
         int result = param1 + param2;
         printOperationResult(operation, result);
     }
 
     @Override
-    public void calculationWOLog(int param1, int param2) {
-        calculation(param1, param2);
+    public void calculationSumWOLog(int param1, int param2) {
+        calculationSum(param1, param2);
     }
 
     @Log
     @Override
-    public void calculation(int param1, int param2, MyClassEnum operation) {
+    public void calculationOperation(int param1, int param2, MyClassEnum operation) {
         double result = 0;
         switch (operation) {
             case ADDITION -> {
@@ -50,11 +44,11 @@ public class MyClassImpl implements MyClassInterface {
         }
     }
 
-    public void printOperationResult(MyClassEnum operation, Number result) {
+    private void printOperationResult(MyClassEnum operation, Number result) {
         System.out.println("---Operation: " + operation + " , result = " + result);
     }
 
-    public void printOperationResult(MyClassEnum operation, Number result, Boolean isDivision) {
+    private void printOperationResult(MyClassEnum operation, Number result, Boolean isDivision) {
         if (!isDivision) {
             System.out.println("---Operation: " + operation + " , result = " + result);
         } else {
