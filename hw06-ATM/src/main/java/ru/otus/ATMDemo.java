@@ -1,10 +1,11 @@
 package ru.otus;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 public class ATMDemo {
-    public static void main(String[] args) {
-        Map<BanknoteEnum, Integer> banknoteMapInATM = new BanknoteMapBuilder()
+    public static void main(String[] args) throws ATMExceptions {
+        TreeMap<BanknoteEnum, Integer> banknoteMapInATM = (TreeMap<BanknoteEnum, Integer>) new BanknoteMapBuilder()
                 .add50(10)
                 .add100(10)
                 .add200(10)

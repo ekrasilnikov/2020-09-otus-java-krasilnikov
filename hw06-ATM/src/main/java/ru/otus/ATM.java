@@ -3,21 +3,26 @@ package ru.otus;
 import java.util.*;
 
 class ATM {
-    private Cassete cassete;
+    private final Cassete cassete;
+    private final ATMMessages atmMessages;
+
+    {
+        atmMessages = new ATMMessages();
+    }
 
     public ATM(Cassete cassete) {
         this.cassete = cassete;
     }
 
     public void printBalance() {
-        ATMMessage.printBalance(this.cassete.getCasseteSum());
+        this.atmMessages.printBalance(this.cassete.getCasseteSum());
     }
 
     public void depositingCash(Map<BanknoteEnum, Integer> depositingMap) {
         for (Map.Entry<BanknoteEnum, Integer> currEntry : depositingMap.entrySet()) {
             cassete.addBanknote(currEntry.getKey(), currEntry.getValue());
         }
-        ATMMessage.printDepositingSum(getDepositingCashSum(depositingMap));
+        this.atmMessages.printDepositingSum(getDepositingCashSum(depositingMap));
     }
 
     private Integer getDepositingCashSum(Map<BanknoteEnum, Integer> depositingMap) {
@@ -29,21 +34,16 @@ class ATM {
     }
 
     public void withdrawMoney(int amount) {
-        ATMMessage.printWithdrawTrying(amount);
-
-        Map<BanknoteEnum, Integer> reverseAtmBnkntMap = new TreeMap<>(Collections.reverseOrder());
-        reverseAtmBnkntMap.putAll(this.cassete.getBnkntMap());
-        WithdrawResult withdrawResult = checkWithdrawPossibility(reverseAtmBnkntMap, amount);
-
-        if (withdrawResult.isReal()) {
-            withdrawMoneyFromCassete(withdrawResult.getWithdrawMap());
-            ATMMessage.printWithdrawSuccess();
-        } else {
-            ATMMessage.printWithdrawFail(this.cassete.getCasseteSum());
+        this.atmMessages.printWithdrawTrying(amount);
+        try {
+            withdrawMoneyFromCassete(checkWithdrawPossibility(this.cassete.getBnkntMap(), amount));
+            this.atmMessages.printWithdrawSuccess();
+        } catch (ATMExceptions exceptions) {
+            System.out.println(exceptions);
         }
     }
 
-    private WithdrawResult checkWithdrawPossibility(Map<BanknoteEnum, Integer> map, int amount) {
+    private Map<BanknoteEnum, Integer> checkWithdrawPossibility(Map<BanknoteEnum, Integer> map, int amount) throws ATMExceptions {
         boolean isReal = false;
         Map<BanknoteEnum, Integer> result = new HashMap<>();
         for (Map.Entry<BanknoteEnum, Integer> current : map.entrySet()) {
@@ -59,34 +59,16 @@ class ATM {
         }
         if (amount == 0) {
             isReal = true;
+        } else {
+            throw new ATMExceptions(atmMessages.getWithdrawFail());
         }
-        return new WithdrawResult(isReal, result);
+        return result;
     }
 
-    private void withdrawMoneyFromCassete(Map<BanknoteEnum, Integer> map) {
+    private void withdrawMoneyFromCassete(Map<BanknoteEnum, Integer> map) throws ATMExceptions {
         for (Map.Entry<BanknoteEnum, Integer> currentEntry : map.entrySet()) {
             this.cassete.withdrawBanknote(currentEntry.getKey(), currentEntry.getValue());
         }
     }
-
-
-    class WithdrawResult {
-        private boolean isReal;
-        private Map<BanknoteEnum, Integer> withdrawMap;
-
-        WithdrawResult(boolean isReal, Map<BanknoteEnum, Integer> withdrawMap) {
-            this.isReal = isReal;
-            this.withdrawMap = withdrawMap;
-        }
-
-        boolean isReal() {
-            return isReal;
-        }
-
-        Map<BanknoteEnum, Integer> getWithdrawMap() {
-            return withdrawMap;
-        }
-    }
-
 }
 
