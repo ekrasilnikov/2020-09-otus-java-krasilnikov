@@ -14,4 +14,5 @@
 ДЗ "Контейнеры и алгоритмы" - ./hw02-DIYarrayList<br>
 ДЗ "Аннотации" - ./hw03-annotations<br>
 ДЗ "Сборщик мусора" - ./hw04-gc<br>
+ДЗ "Байт код, class-loader, инструментация, asm. ДЗ" - ./hw05-byteCodes<br>
 ДЗ "Эмулятор ATM" - ./hw06-ATM<br>
