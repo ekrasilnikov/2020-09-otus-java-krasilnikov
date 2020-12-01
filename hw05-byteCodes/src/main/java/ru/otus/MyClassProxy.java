@@ -5,9 +5,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 class MyClassProxy {
 
@@ -19,21 +18,21 @@ class MyClassProxy {
 
     static class DemoInvocationHandler implements InvocationHandler {
         private final MyClassInterface myClass;
-        List<Method> annotatedMethods = new ArrayList<>();
+        Map<String, Method> annotatedMethodsMap = new HashMap<>();
 
         DemoInvocationHandler(MyClassInterface myClass) throws NoSuchMethodException {
             this.myClass = myClass;
             for (Method method : myClass.getClass().getMethods()) {
                 if (myClass.getClass().getMethod(method.getName(), method.getParameterTypes()).isAnnotationPresent(Log.class)) {
-                    annotatedMethods.add(method);
+                    annotatedMethodsMap.put(method.getName(), method);
                 }
             }
         }
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            for (Method annotatedMethod : annotatedMethods) {
-                if (annotatedMethod.getName().equals(method.getName())) {
+            for (Map.Entry<String, Method> annotatedMethod : annotatedMethodsMap.entrySet()) {
+                if (annotatedMethod.getKey().equals(method.getName())) {
                     printLog(myClass.getClass().getMethod(method.getName(), method.getParameterTypes()), args);
                 }
             }
