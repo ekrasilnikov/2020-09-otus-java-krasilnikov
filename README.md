@@ -10,9 +10,10 @@
 Виталий Куценко<br>
 Дмитрий Коган
 
-ДЗ "Подготовка к курсу" - ./hw01-gradle<br>
-ДЗ "Контейнеры и алгоритмы" - ./hw02-DIYarrayList<br>
-ДЗ "Аннотации" - ./hw03-annotations<br>
-ДЗ "Сборщик мусора" - ./hw04-gc<br>
-ДЗ "Байт код, class-loader, инструментация, asm. ДЗ" - ./hw05-byteCodes<br>
-ДЗ "Эмулятор ATM" - ./hw06-ATM<br>
+* ДЗ "Подготовка к курсу" - ./hw01-gradle<br>
+* ДЗ "Контейнеры и алгоритмы" - ./hw02-DIYarrayList<br>
+* ДЗ "Аннотации" - ./hw03-annotations<br>
+* ДЗ "Сборщик мусора" - ./hw04-gc<br>
+* ДЗ "Байт код, class-loader, инструментация, asm. ДЗ" - ./hw05-byteCodes<br>
+* ДЗ "Эмулятор ATM" - ./hw06-ATM<br>
+* ДЗ "Обработчик сообщений" - ./hw07-messageHandler<br>
