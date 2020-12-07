@@ -7,8 +7,8 @@ public class MessageHistory {
     private final Message newMessage;
 
     public MessageHistory(Message oldMessage, Message newMessage) {
-        this.oldMessage = oldMessage;
-        this.newMessage = newMessage;
+        this.oldMessage = oldMessage.getCopy();
+        this.newMessage = newMessage.getCopy();
     }
 
     public Message getOldMessage() {
@@ -21,9 +21,8 @@ public class MessageHistory {
 
     @Override
     public String toString() {
-        return "MessageHistory{" +
+        return "History Rec: " +
                 "oldMessage=" + oldMessage +
-                ", newMessage=" + newMessage +
-                '}';
+                ", newMessage=" + newMessage;
     }
 }

@@ -4,9 +4,14 @@ import ru.otus.Message;
 import ru.otus.listener.Listener;
 
 public class ListenerMessageHistory implements Listener {
+    private final MessageHistoryStorage messageHistoryStorage;
+
+    public ListenerMessageHistory(MessageHistoryStorage storage) {
+        this.messageHistoryStorage = storage;
+    }
 
     @Override
     public void onUpdated(Message oldMsg, Message newMsg) {
-        MessageHistoryStorage.getInstance().addMessageHistory(oldMsg, newMsg);
+        messageHistoryStorage.addMessageHistory(oldMsg, newMsg);
     }
 }

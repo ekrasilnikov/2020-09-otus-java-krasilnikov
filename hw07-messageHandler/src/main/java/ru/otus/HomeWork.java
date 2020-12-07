@@ -21,8 +21,13 @@ public class HomeWork {
         var listenerPrinter = new ListenerPrinter();
         complexProcessor.addListener(listenerPrinter);
 
-        var listenerKeepHistory = new ListenerMessageHistory();
-        complexProcessor.addListener(listenerKeepHistory);
+        MessageHistoryStorage messageHistoryStorage = new MessageHistoryStorage();
+
+        var listenerMessageHistory = new ListenerMessageHistory(messageHistoryStorage);
+        complexProcessor.addListener(listenerMessageHistory);
+
+        ObjectForMessage objectForMessage = new ObjectForMessage();
+        objectForMessage.setData(List.of("test1", "test2"));
 
         var message1 = new Message.Builder(1L)
                 .field1("f1")
@@ -37,6 +42,7 @@ public class HomeWork {
                 .field10("f10")
                 .field11("f11")
                 .field12("f12")
+                .field13(objectForMessage)
                 .build();
 
         var message2 = new Message.Builder(1L)
@@ -58,7 +64,7 @@ public class HomeWork {
         complexProcessor.handle(message3);
 
         System.out.println("-------Message History---------");
-        for (MessageHistory current : MessageHistoryStorage.getInstance().getMessageHistoryList()) {
+        for (MessageHistory current : messageHistoryStorage.getMessageHistoryList()) {
             System.out.println(current);
         }
     }

@@ -44,6 +44,27 @@ public class Message {
         }
     }
 
+    public Message getCopy() {
+        ObjectForMessage objectForMessage = new ObjectForMessage();
+        objectForMessage.setData(new ArrayList<>(this.getField13().getData()));
+        Message result = new Builder(this.id)
+                .field1(this.field1)
+                .field2(this.field2)
+                .field3(this.field3)
+                .field4(this.field4)
+                .field5(this.field5)
+                .field6(this.field6)
+                .field7(this.field7)
+                .field8(this.field8)
+                .field9(this.field9)
+                .field10(this.field10)
+                .field11(this.field11)
+                .field12(this.field12)
+                .field13(objectForMessage)
+                .build();
+        return result;
+    }
+
     public long getId() {
         return id;
     }

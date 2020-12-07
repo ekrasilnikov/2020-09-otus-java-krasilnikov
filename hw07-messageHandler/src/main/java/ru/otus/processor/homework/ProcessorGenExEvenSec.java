@@ -6,27 +6,18 @@ import ru.otus.processor.Processor;
 import java.time.LocalTime;
 
 public class ProcessorGenExEvenSec implements Processor {
-    private final int checkSecond;
+    private int checkSecond;
 
     @Override
     public Message process(Message message) {
-        checkEven();
+        if (checkEven()) {
+            throw new ProcessorGenExEvenSecException(checkSecond);
+        }
         return message;
     }
 
-    public ProcessorGenExEvenSec() {
+    public boolean checkEven() {
         checkSecond = LocalTime.now().toSecondOfDay();
+        return checkSecond % 2 == 0;
     }
-
-    public ProcessorGenExEvenSec(int checkSecond) {
-        this.checkSecond = checkSecond;
-    }
-
-    private void checkEven() {
-        if (checkSecond % 2 == 0) {
-            System.out.println("Even Second!");
-            throw new ProcessorGenExEvenSecException(checkSecond);
-        }
-    }
-
 }

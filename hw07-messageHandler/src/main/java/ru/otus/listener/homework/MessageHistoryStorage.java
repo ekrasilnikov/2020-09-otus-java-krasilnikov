@@ -6,18 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MessageHistoryStorage {
-    private static MessageHistoryStorage instance;
-    private static List<MessageHistory> messageHistoryList;
+    private final List<MessageHistory> messageHistoryList;
 
-    private MessageHistoryStorage() {
+    public MessageHistoryStorage() {
         messageHistoryList = new ArrayList<>();
-    }
-
-    public static MessageHistoryStorage getInstance() {
-        if (instance == null) {
-            instance = new MessageHistoryStorage();
-        }
-        return instance;
     }
 
     public void addMessageHistory(Message oldMsg, Message newMsg) {

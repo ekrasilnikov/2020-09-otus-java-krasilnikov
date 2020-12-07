@@ -102,7 +102,14 @@ class ComplexProcessorTest {
     @DisplayName("Тестируем исключения в четную секунду")
     void evenSecExceptionTest() {
         var message = mock(Message.class);
-        ProcessorGenExEvenSec evenSec = new ProcessorGenExEvenSec(2);
+        ProcessorGenExEvenSec evenSec = new ProcessorGenExEvenSec();
+        while (!evenSec.checkEven()) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         assertThatExceptionOfType(ProcessorGenExEvenSecException.class).isThrownBy(() -> evenSec.process(message));
     }
 
