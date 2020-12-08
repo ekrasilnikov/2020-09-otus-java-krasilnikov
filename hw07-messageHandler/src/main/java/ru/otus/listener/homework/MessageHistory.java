@@ -7,8 +7,8 @@ public class MessageHistory {
     private final Message newMessage;
 
     public MessageHistory(Message oldMessage, Message newMessage) {
-        this.oldMessage = oldMessage.getCopy();
-        this.newMessage = newMessage.getCopy();
+        this.oldMessage = oldMessage.clone();
+        this.newMessage = newMessage.clone();
     }
 
     public Message getOldMessage() {

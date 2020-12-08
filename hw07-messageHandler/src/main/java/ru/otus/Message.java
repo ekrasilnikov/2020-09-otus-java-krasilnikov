@@ -44,7 +44,7 @@ public class Message {
         }
     }
 
-    public Message getCopy() {
+    public Message clone() {
         ObjectForMessage objectForMessage = new ObjectForMessage();
         objectForMessage.setData(new ArrayList<>(this.getField13().getData()));
         Message result = new Builder(this.id)

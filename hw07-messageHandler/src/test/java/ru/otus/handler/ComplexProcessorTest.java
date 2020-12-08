@@ -9,6 +9,7 @@ import ru.otus.processor.Processor;
 import ru.otus.processor.homework.ProcessorGenExEvenSec;
 import ru.otus.processor.homework.ProcessorGenExEvenSecException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,14 +103,7 @@ class ComplexProcessorTest {
     @DisplayName("Тестируем исключения в четную секунду")
     void evenSecExceptionTest() {
         var message = mock(Message.class);
-        ProcessorGenExEvenSec evenSec = new ProcessorGenExEvenSec();
-        while (!evenSec.checkEven()) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        ProcessorGenExEvenSec evenSec = new ProcessorGenExEvenSec(() -> LocalDateTime.of(2020, 12, 8, 17, 24, 02));
         assertThatExceptionOfType(ProcessorGenExEvenSecException.class).isThrownBy(() -> evenSec.process(message));
     }
 

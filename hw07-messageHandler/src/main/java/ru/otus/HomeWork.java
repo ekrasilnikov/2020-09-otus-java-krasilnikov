@@ -9,12 +9,13 @@ import ru.otus.processor.*;
 import ru.otus.processor.homework.ProcessorGenExEvenSec;
 import ru.otus.processor.homework.ProcessorSwapFields;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class HomeWork {
     public static void main(String[] args) {
         var processors = List.of(new LoggerProcessor(new ProcessorConcatFields()), new ProcessorSwapFields(),
-                new ProcessorGenExEvenSec());
+                new ProcessorGenExEvenSec(LocalDateTime::now));
         var complexProcessor = new ComplexProcessor(processors, (ex) -> {
         });
 
