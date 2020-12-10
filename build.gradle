@@ -31,7 +31,7 @@ allprojects {
             }
             dependency("com.google.guava:guava:${Versions.guava}")
             dependency("org.apache.commons:commons-lang3:${Versions.apache_commons}")
-
+            dependency("com.google.code.gson:gson:${Versions.gson}")
         }
     }
 }
