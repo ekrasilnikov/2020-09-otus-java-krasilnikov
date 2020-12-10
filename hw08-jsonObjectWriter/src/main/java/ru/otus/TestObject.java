@@ -32,10 +32,7 @@ public class TestObject {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(value1, value2, value3, value4, value7, value8);
-        result = 31 * result + Arrays.hashCode(value5);
-        result = 31 * result + Arrays.hashCode(value6);
-        return result;
+        return Objects.hash(value1, value2, value3, value4, value7, value8);
     }
 
     @Override

@@ -32,6 +32,7 @@ public class Demo {
 
         MyGson myGson = new MyGson();
         String myJson = myGson.toJson(obj);
+
         System.out.println("MYGSON: " + myJson);
 
         TestObject obj2 = gson.fromJson(myJson, TestObject.class);

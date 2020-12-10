@@ -6,22 +6,24 @@ import java.util.Collection;
 
 public class MyGson {
     public String toJson(Object object) {
-        Class<?> objClass = object.getClass();
-        Field[] objFields = objClass.getDeclaredFields();
-        StringBuilder stringBuilder = new StringBuilder("{");
-        int currEntry = 0;
-        for (Field currField : objFields) {
-            String fieldName = currField.getName();
-            stringBuilder.append("\"")
-                    .append(fieldName)
-                    .append("\":")
-                    .append(getFieldValue(currField, object));
-            if (++currEntry != objFields.length) {
-                stringBuilder.append(",");
+        if (object != null) {
+            Class<?> objClass = object.getClass();
+            Field[] objFields = objClass.getDeclaredFields();
+            StringBuilder stringBuilder = new StringBuilder("{");
+            int currEntry = 0;
+            for (Field currField : objFields) {
+                String fieldName = currField.getName();
+                stringBuilder.append("\"")
+                        .append(fieldName)
+                        .append("\":")
+                        .append(getFieldValue(currField, object));
+                if (++currEntry != objFields.length) {
+                    stringBuilder.append(",");
+                }
             }
-        }
-        stringBuilder.append("}");
-        return stringBuilder.toString();
+            stringBuilder.append("}");
+            return stringBuilder.toString();
+        } else return null;
     }
 
     private String getFieldValue(Field field, Object object) {
