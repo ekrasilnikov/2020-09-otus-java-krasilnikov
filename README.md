@@ -17,3 +17,4 @@
 * ДЗ "Байт код, class-loader, инструментация, asm. ДЗ" - ./hw05-byteCodes<br>
 * ДЗ "Эмулятор ATM" - ./hw06-ATM<br>
 * ДЗ "Обработчик сообщений" - ./hw07-messageHandler<br>
+* ДЗ "Cвой json object writer" - ./hw08-jsonObjectWriter<br>
