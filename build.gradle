@@ -32,11 +32,14 @@ allprojects {
             dependency("com.google.guava:guava:${Versions.guava}")
             dependency("org.apache.commons:commons-lang3:${Versions.apache_commons}")
             dependency("com.google.code.gson:gson:${Versions.gson}")
+            dependency("org.flywaydb:flyway-core:${Versions.flyway}")
+            dependency("org.postgresql:postgresql:${Versions.postgresql}")
+            dependency("org.projectlombok:lombok:${Versions.lombok}")
         }
     }
 }
 
 //gradle -q hello
 task hello {
-    println '2020-09-otus-java-krasilnikov homework'
+    println 'Hello world!'
 }
