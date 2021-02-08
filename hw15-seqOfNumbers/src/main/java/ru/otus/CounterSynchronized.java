@@ -9,10 +9,10 @@ public class CounterSynchronized {
     private int counterValue;
     private boolean counterReverse;
 
-    {
-        last = "";
-        counterReverse = false;
-        counterValue = 1;
+    public CounterSynchronized() {
+        this.last = "";
+        this.counterReverse = false;
+        this.counterValue = 1;
     }
 
     public synchronized void action(String message) {
