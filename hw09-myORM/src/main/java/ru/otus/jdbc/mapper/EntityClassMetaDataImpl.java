@@ -17,7 +17,7 @@ public final class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> 
     public EntityClassMetaDataImpl(Class<T> clazz) {
         this.clazz = clazz;
         this.allFields = Arrays.asList(clazz.getDeclaredFields().clone());
-        this.idField = allFields.stream().filter(field -> field.isAnnotationPresent(Id.class)).findAny().orElse(null);
+        this.idField = allFields.stream().filter(field -> field.isAnnotationPresent(Id.class)).findAny().orElseThrow(EntityClassMetaDataException::new);
     }
 
     @Override
