@@ -18,5 +18,5 @@
 * ДЗ "Эмулятор ATM" - ./hw06-ATM<br>
 * ДЗ "Обработчик сообщений" - ./hw07-messageHandler<br>
 * ДЗ "Cвой json object writer" - ./hw08-jsonObjectWriter<br>
-
+* ДЗ "Самодельный ORM" - ./hw09-myORM<br>
 * ДЗ "Последовательность чисел" - ./hw15-seqOfNumbers<br>
