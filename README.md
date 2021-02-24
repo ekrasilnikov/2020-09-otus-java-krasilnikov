@@ -20,4 +20,8 @@
 * ДЗ "Cвой json object writer" - ./hw08-jsonObjectWriter<br>
 * ДЗ "Самодельный ORM" - ./hw09-myORM<br>
 * ДЗ "Использование Hibernate" - ./hw10-hibernate<br>
+* ДЗ "Свой cache engine" - ./hw11-cacheEngine<br>
+  
+
+
 * ДЗ "Последовательность чисел" - ./hw15-seqOfNumbers<br>
