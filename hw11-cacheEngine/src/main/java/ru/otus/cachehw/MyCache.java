@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
+import java.util.Set;
 import java.util.WeakHashMap;
 
 /**
@@ -15,7 +16,7 @@ public class MyCache<K, V> implements HwCache<K, V>, HwListener<K, V> {
     private static final Logger logger = LoggerFactory.getLogger(MyCache.class);
 
     private final WeakHashMap<K, V> weakHashMap;
-    private final HashSet<HwListener<K, V>> hwListenerHashSet;
+    private final Set<HwListener<K, V>> hwListenerHashSet;
 
     public MyCache() {
         this.weakHashMap = new WeakHashMap<>();
@@ -31,8 +32,7 @@ public class MyCache<K, V> implements HwCache<K, V>, HwListener<K, V> {
 
     @Override
     public void remove(K key) {
-        V value = weakHashMap.get(key);
-        weakHashMap.remove(key);
+        V value = weakHashMap.remove(key);
         notify(key, value, "remove");
         logger.info("Working with the cache: action - remove");
     }
@@ -56,6 +56,11 @@ public class MyCache<K, V> implements HwCache<K, V>, HwListener<K, V> {
 
     @Override
     public void notify(K key, V value, String action) {
-        hwListenerHashSet.forEach(kvHwListener -> kvHwListener.notify(key, value, action));
+        try {
+            hwListenerHashSet.forEach(kvHwListener -> kvHwListener.notify(key, value, action));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
     }
 }
