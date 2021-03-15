@@ -21,7 +21,7 @@
 * ДЗ "Самодельный ORM" - ./hw09-myORM<br>
 * ДЗ "Использование Hibernate" - ./hw10-hibernate<br>
 * ДЗ "Свой cache engine" - ./hw11-cacheEngine<br>
-  
 
+* ДЗ "Собственный IoC контейнер" - ./hw13-dependencyInjection<br>
 
 * ДЗ "Последовательность чисел" - ./hw15-seqOfNumbers<br>
